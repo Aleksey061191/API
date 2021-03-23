@@ -5,20 +5,21 @@ export const DebounceExample = () => {
   const [text, setText] = useState("Translate");
   const debounceText = useDebounce(text, 800);
   useEffect(() => {
-      fetch("https://google-translate1.p.rapidapi.com/language/translate/v2/languages", {
-    	"method": "GET",
-    	"headers": {
-    		"accept-encoding": "application/gzip",
-    		"x-rapidapi-key": "SIGN-UP-FOR-KEY",
-    		"x-rapidapi-host": "google-translate1.p.rapidapi.com"
-    	}
+    fetch("https://google-translate1.p.rapidapi.com/language/translate/v2/languages", {
+      "method": "GET",
+      "headers": {
+        "accept-encoding": "application/gzip",
+        "x-rapidapi-key": "SIGN-UP-FOR-KEY",
+        "x-rapidapi-host": "google-translate1.p.rapidapi.com"
+      }
     })
-    .then(response => {
-	    console.log(response);
-    })
-    .catch(err => {
-	    console.error(err);
-    });
+      .then(response => {
+        response.json();
+      })
+      .then()
+      .catch(err => {
+        console.error(err);
+      });
   }, [debounceText]);
 
   return (
