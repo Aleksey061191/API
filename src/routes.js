@@ -1,17 +1,13 @@
 
-import { Home } from "./pages";
-import TranslateIcon from '@material-ui/icons/Translate';
+import { TablePage, FilmCardPage } from "./pages";
 
-
-export const routes = [
-  {
-    header: "Translate",
+export const routes = [{
     path: "/",
     exact: true,
-    id: 1,
-    icon: <TranslateIcon />,
-    component: Home,
-  },
- 
- 
-];
+    component: TablePage,
+},
+{
+    path: "/card/:id",
+    component: FilmCardPage,
+},
+]

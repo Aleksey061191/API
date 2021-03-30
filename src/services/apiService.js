@@ -1,20 +1,8 @@
-import React from 'react'
+import axios from 'axios';
 
-const createApiInstance = (baseUrl, defaultHeaders) => ({
-    get: (url, params) => fetch('${ baseUrl } / ${ url }',
-        { ...defaultParams, ...params })
-        .then(data => data.json())
-        .catch(err => {
-            console.error(err);
-        })
+const createApiService = () => axios.create({
+    baseURL: 'https://api.themoviedb.org/3',
+    timeout: 1000
+});
 
-
-})
-
-export const ApiService = createApiInstance('https://google-translate1.p.rapidapi.com/language/translate', {
-    headers: {
-        "accept-encoding": "application/gzip",
-        "x-rapidapi-key": "SIGN-UP-FOR-KEY",
-        "x-rapidapi-host": "google-translate1.p.rapidapi.com"
-    }
-})
+export const ApiService = createApiService();

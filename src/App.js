@@ -1,49 +1,30 @@
-import "./App.css";
-import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { routes } from "./routes";
-import { DefaultLayout } from "./components/layouts/defaultLayout";
-import { combineReducers, createStore } from "redux";
-import { colorsReducer } from "./features/colors/redux/reducer";
-import { Provider } from "react-redux";
+import { routes } from "./routes"
+import { DefaultLayout } from './components/layouts/defaultLayout.js'
+import { FilmContextProvider } from './context/FilmContext';
 
-const rootReducer = combineReducers({ colors: colorsReducer });
-const store = createStore(rootReducer);
 
 function App() {
   
   return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <DefaultLayout routes={routes}>
-          <Switch>
-            {routes.map((route) => {
-              if (!!route.path) {
-                return (
-                  <Route path={route.path} exact={route.exact}>
-                    <route.component />
-                  </Route>
-                );
-              }
-              return (
-                <>
-                  {route.subroutes.map((route) => {
-                    return (
-                      <Route path={route.path} exact={route.exact}>
-                        <route.component />
-                      </Route>
-                    );
-                  })}
-                </>
-              );
-            })}
-            <Route path="*">
+    <FilmContextProvider>
+    <BrowserRouter>
+      <DefaultLayout>
+        <Switch>
+          {routes.map(route => {
+            return (
+              <Route path={route.path} exact={route.exact}>
+                <route.component />
+              </Route>
+            )
+          })}
+          <Route path="*">
               <h1>404 not found</h1>
             </Route>
-          </Switch>
-        </DefaultLayout>
-      </BrowserRouter>
-    </Provider>
+        </Switch>
+      </DefaultLayout>
+    </BrowserRouter>
+  </FilmContextProvider>
   );
 }
 
