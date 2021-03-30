@@ -6,15 +6,20 @@ const FilmContext = createContext();
 export const FilmContextProvider = ({ children }) => {
 
     const [films, setFilms] = useState([]);
-    const [selectedFilms, setSelectedFilms] = useState({});
-    const page = {};
+    const [name, setName] = useState('');
 
     useEffect(() => {
         FilmApi.getAll().then(resp => setFilms(resp?.data?.results ?? []))
     }, []);
 
+    useEffect(() => {
+        FilmApi.getAll(name).then(resp => setFilms(resp?.data?.results ?? []))
+    }, [name]);
+
     const value = {
-        films, setSelectedFilms, selectedFilms, page
+        films,
+        name,
+        setName
     }
 
     return (

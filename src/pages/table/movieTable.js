@@ -1,22 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFilmsContext } from '../../context/FilmContext';
 import {
-    IconButton,
     Table,
     TableBody,
     TableCell,
     TableFooter,
     TableHead,
     TableRow,
-    TextField,
-    Button,
+    TextField
 } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
-import { useState } from 'react';
-import { EventSharp } from '@material-ui/icons';
+
+
+
 
 const tableConfig = [
-    { header: ''},
+    { header: '' },
     { header: "Название", key: "title", isLink: true },
     { header: "Год", key: "release_date" },
     { header: "Оценка", key: "vote_average" },
@@ -25,18 +24,17 @@ const tableConfig = [
 
 
 const TablePage = () => {
-    const { films, page, selectedFilms } = useFilmsContext();
+    const { films, name, setName } = useFilmsContext();
     console.log(films);
-    
-    const handleClick = (e) =>{
-        e.preventDefault()
-        page = films.id;
-        
-    }
-    
+
+
+
     return (
         <>
-            <input/>
+            <TextField value={name} onChange={(e) => setName(e.target.value)}>
+
+            </TextField>
+
             <Table>
                 <TableHead>
                     <TableRow>
@@ -51,19 +49,19 @@ const TablePage = () => {
                             <TableRow >
                                 {tableConfig.map((cell) =>
                                     <TableCell >
-                                        
-                                        {cell.header==''?
-                                            <img src={'https://image.tmdb.org/t/p/w500/'+ item.poster_path} style={{width: '70px', height: '90px'}}></img>
-                                        :
-                                        cell.isLink?
-                                            <NavLink to={`/card/${item.id}`} onclick={handleClick} >
-                                               
-                                                {item[cell.key]}
-                                                
-                                            </NavLink>
+
+                                        {cell.header === '' ?
+                                            <img src={'https://image.tmdb.org/t/p/w500/' + item.poster_path} style={{ width: '70px', height: '90px' }}></img>
                                             :
-                                            item[cell.key]
-                                            
+                                            cell.isLink ?
+                                                <NavLink to={`/card/${item.id}`} >
+
+                                                    {item[cell.key]}
+
+                                                </NavLink>
+                                                :
+                                                item[cell.key]
+
                                         }
                                     </TableCell>
                                 )}
@@ -74,6 +72,7 @@ const TablePage = () => {
                 <TableFooter>
                 </TableFooter>
             </Table>
+
         </>
     )
 }
