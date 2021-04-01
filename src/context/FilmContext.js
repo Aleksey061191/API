@@ -7,13 +7,13 @@ export const FilmContextProvider = ({ children }) => {
 
     const [films, setFilms] = useState([]);
     const [name, setName] = useState('');
-
+    
     useEffect(() => {
+        {name==''?
         FilmApi.getAll().then(resp => setFilms(resp?.data?.results ?? []))
-    }, []);
-
-    useEffect(() => {
-        FilmApi.getAll(name).then(resp => setFilms(resp?.data?.results ?? []))
+        :
+        FilmApi.getSearch(name).then(resp => setFilms(resp?.data?.results ?? []))
+        }
     }, [name]);
 
     const value = {

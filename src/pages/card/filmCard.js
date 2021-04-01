@@ -74,7 +74,7 @@ const FilmCardPage = () => {
                                         </Grid>
                                     </Grid>
                                     <Grid item>
-                                        <Typography variant="subtitle1">Rate: {card.vote_average}</Typography>
+                                        <Typography variant="subtitle1">Rating: {card.vote_average}</Typography>
                                     </Grid>
                                 </Grid>
                             </Grid>

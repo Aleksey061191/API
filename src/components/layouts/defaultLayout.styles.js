@@ -10,6 +10,7 @@ export const useStyles = makeStyles((theme) => ({
   header: {
     gridColumn: "1/3",
     height: "64px",
+    alignItems: "center"
   },
   asideMenu: {
     gridColumn: "1/2",

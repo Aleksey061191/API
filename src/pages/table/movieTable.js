@@ -10,6 +10,8 @@ import {
     TextField
 } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
+import { makeStyles } from '@material-ui/core/styles';
+import Pagination from '@material-ui/lab/Pagination';
 
 
 
@@ -21,30 +23,48 @@ const tableConfig = [
     { header: "Оценка", key: "vote_average" },
 ];
 
+const useStyles = makeStyles((theme) => ({
+    root: {
+      '& > *': {
+        marginTop: theme.spacing(2),
+      },
+    },
+  }));
 
+  
 
 const TablePage = () => {
     const { films, name, setName } = useFilmsContext();
     console.log(films);
 
+    const classes = useStyles();
+    
+  const [page, setPage] = useState(1);
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
 
-
+    const filmsPerPage = 5;
+    const pagesVisited = (page-1) * filmsPerPage;
+    
+  
     return (
         <>
-            <TextField value={name} onChange={(e) => setName(e.target.value)}>
+            <div style={{padding:"20px", display: "grid"}}>
+                <TextField id="outlined-search" label="Search Film" type="search" variant="outlined" size="small"  value={name} onChange={(e) => setName(e.target.value)}>
 
-            </TextField>
-
+                </TextField>
+            </div>
             <Table>
                 <TableHead>
                     <TableRow>
                         {tableConfig.map((cell) => (
-                            <TableCell>{cell.header}</TableCell>
+                            <TableCell >{cell.header}</TableCell>
                         ))}
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {films.map((item) => {
+                    {films.slice(pagesVisited, pagesVisited + filmsPerPage).map((item) => {
                         return (
                             <TableRow >
                                 {tableConfig.map((cell) =>
@@ -54,7 +74,7 @@ const TablePage = () => {
                                             <img src={'https://image.tmdb.org/t/p/w500/' + item.poster_path} style={{ width: '70px', height: '90px' }}></img>
                                             :
                                             cell.isLink ?
-                                                <NavLink to={`/card/${item.id}`} >
+                                                <NavLink to={`/card/${item.id}`} style ={{textDecoration: "none"}}>
 
                                                     {item[cell.key]}
 
@@ -68,11 +88,14 @@ const TablePage = () => {
                             </TableRow>
                         );
                     })}
+                    
                 </TableBody>
-                <TableFooter>
+                <TableFooter> 
                 </TableFooter>
             </Table>
-
+            <div className={classes.root} style={{transform: "translateX(40%)"}}>
+      <Pagination count={films.length/5} page={page} onChange={handleChange} />
+    </div>
         </>
     )
 }
